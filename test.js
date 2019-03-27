@@ -3,29 +3,50 @@ let assert = {
         if(bool){
             return;
         }
-        throw msg || "Assertion Error: Ok" 
+        throw msg || "Assertion Error: Ok";
     },
     equals: (a, b, msg) => {
         if(a == b){
             return;
         }
-        throw msg || "Assertion Error: Equals"
+        throw msg || "Assertion Error: Equals";
     },
     strictEquals: (a, b, msg) => {
         if(a === b){
             return;
         }
-        throw msg || "Assertion Error: Strict Equals"
+        throw msg || "Assertion Error: Strict Equals";
+    },
+    fails: (func, msg) => {
+        try{
+            func();
+            throw msg || "Assertion Error: fails";
+        }
+        catch(e){
+            return;
+        }
+    },
+    succeeds: (func, msg) => {
+        try{
+            func();
+            return;
+        }
+        catch(e){
+            throw msg || "Assertion Error: succeeds";
+        }
     }
 }
 
 let test = {
-    Suite: () => {
+    Suite: (name) => {
         return {
+            name: name,
             setup: (func) => {
                 this.pre = func;
             },
             addTest: (name, test) => {
+                if(!name)throw "Test needs a name";
+                if(!test)throw "No function supplied";
                 if(!this.tests)this.tests = [];
                 this.tests.push({
                     test: test,
@@ -36,6 +57,7 @@ let test = {
                 this.post = func;
             },
             run:() => {
+                if(this.name)console.log("Running", this.name);
                 if(!this.tests)throw "No tests";
                 this.tests.forEach((test) => {
                     if(this.pre)this.pre();
