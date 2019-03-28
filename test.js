@@ -5,17 +5,29 @@ let assert = {
         }
         throw msg || "Assertion Error: Ok";
     },
-    equals: (a, b, msg) => {
+    equal: (a, b, msg) => {
         if(a == b){
             return;
         }
-        throw msg || "Assertion Error: Equals";
+        throw msg || "Assertion Error: Equal";
     },
-    strictEquals: (a, b, msg) => {
+    strictEqual: (a, b, msg) => {
         if(a === b){
             return;
         }
-        throw msg || "Assertion Error: Strict Equals";
+        throw msg || "Assertion Error: Strict Equal";
+    },
+    notEqual: () => {
+        if(a != b){
+            return;
+        }
+        throw msg || "Assertion Error: Equal";
+    },
+    notStrictEqual: () => {
+        if(a !== b){
+            return;
+        }
+        throw msg || "Assertion Error: Not Strict Equal";
     },
     fails: (func, msg) => {
         try{
