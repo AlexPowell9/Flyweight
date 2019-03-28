@@ -50,9 +50,8 @@ let assert = {
 }
 
 let test = {
-    Suite: (name) => {
+    Suite: () => {
         return {
-            name: name,
             setup: (func) => {
                 this.pre = func;
             },
@@ -69,7 +68,6 @@ let test = {
                 this.post = func;
             },
             run:() => {
-                if(this.name)console.log("Running", this.name);
                 if(!this.tests)throw "No tests";
                 this.tests.forEach((test) => {
                     if(this.pre)this.pre();
@@ -83,14 +81,14 @@ let test = {
                     if(this.post)this.post();
                 });
             }
-        }
+        };
     }
 }
 
 let tests = test.Suite("Assert");
 
 tests.setup(() => {
-    return;
+    console.log("setup")
 });
 
 tests.addTest("ok", () => {
@@ -126,7 +124,7 @@ tests.addTest("succeeds", () => {
 })
 
 tests.cleanup(() => {
-    return;
+    console.log("cleanup")
 })
 
 tests.run();
