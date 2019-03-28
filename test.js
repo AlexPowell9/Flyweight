@@ -17,13 +17,13 @@ let assert = {
         }
         throw msg || "Assertion Error: Strict Equal";
     },
-    notEqual: () => {
+    notEqual: (a, b, msg) => {
         if(a != b){
             return;
         }
         throw msg || "Assertion Error: Equal";
     },
-    notStrictEqual: () => {
+    notStrictEqual: (a, b, msg) => {
         if(a !== b){
             return;
         }
@@ -74,7 +74,7 @@ let test = {
                 this.tests.forEach((test) => {
                     if(this.pre)this.pre();
                     try{
-                        test();
+                        test.test();
                         console.log(test.name, " passed");
                     }
                     catch(e){
@@ -86,3 +86,47 @@ let test = {
         }
     }
 }
+
+let tests = test.Suite("Assert");
+
+tests.setup(() => {
+    return;
+});
+
+tests.addTest("ok", () => {
+    assert.ok(true);
+});
+
+tests.addTest("equal", () => {
+    assert.equal(1, "1");
+});
+
+tests.addTest("strictEqual", () => {
+    assert.strictEqual(1, 1);
+});
+
+tests.addTest("notEqual", () => {
+    assert.notEqual(1, 2);    
+});
+
+tests.addTest("notStrictEqual", () => {
+    assert.notStrictEqual(1, "1");
+});
+
+tests.addTest("fails", () => {
+    assert.fails(() => {
+        throw "error";
+    });
+});
+
+tests.addTest("succeeds", () => {
+    assert.succeeds(() => {
+        return;
+    });
+})
+
+tests.cleanup(() => {
+    return;
+})
+
+tests.run();
