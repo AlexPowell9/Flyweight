@@ -49,6 +49,24 @@ let assert = {
     }
 }
 
+let Suite = Function(name){
+    this.name = name;
+    this.addTest = (name, test) => {
+        if(!test)test = name;
+        if(typeof test !== "function")throw "Test must be a function";
+        if(!this.tests)this.tests = [];
+        this.tests.push({
+            test: test,
+            name: name
+        });
+    };
+    this.setup = (pre) => {
+        if(typeof pre !== "function")throw "Setup requires a function type";
+        this.pre = pre;
+    };
+
+}
+
 let test = {
     Suite: () => {
         return {
