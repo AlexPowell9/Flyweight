@@ -1,34 +1,81 @@
 let assert = {
+    /**
+     * @param bool 
+     * boolean value to check, if true returns else throws error
+     * 
+     * @param msg 
+     * custom message for thrown error
+     */
     ok: (bool, msg) => {
         if(bool){
             return;
         }
         throw msg || "Assertion Error: Ok";
     },
+    /**
+     * @param a 
+     * @param b
+     * values to compare for equality, return if values are equal, uses equals here
+     * 
+     * @param msg
+     * custom message for thrown error
+     */
     equal: (a, b, msg) => {
         if(a == b){
             return;
         }
         throw msg || "Assertion Error: Equal";
     },
+    /**
+     * @param a
+     * @param b
+     * values to compare for equality, return if values are equal, uses strict equals here     
+     * 
+     * @param msg
+     * custom message for thrown error
+     */
     strictEqual: (a, b, msg) => {
         if(a === b){
             return;
         }
         throw msg || "Assertion Error: Strict Equal";
     },
+    /**
+     * @param a
+     * @param b
+     * values to compare for equality, return if values are not equal, uses not equals here     
+     * 
+     * @param msg
+     * custom message for thrown error
+     */
     notEqual: (a, b, msg) => {
         if(a != b){
             return;
         }
         throw msg || "Assertion Error: Equal";
     },
+    /**
+     * @param a
+     * @param b
+     * values to compare for equality, return if values are not equal, uses strict not equals here     
+     * 
+     * @param msg
+     * custom message for thrown error
+     */
     notStrictEqual: (a, b, msg) => {
         if(a !== b){
             return;
         }
         throw msg || "Assertion Error: Not Strict Equal";
     },
+    /**
+     * @param func
+     * @type function
+     * function to test, if function throws error return, else return 
+     * 
+     * @param msg 
+     * custom message for thrown error
+     */
     fails: (func, msg) => {
         try{
             func();
@@ -38,6 +85,14 @@ let assert = {
             return;
         }
     },
+    /**
+     * @param func
+     * @type function
+     * function to test, if function does not throw error return, else throw error
+     * 
+     * @param msg 
+     * custom message for thrown error
+     */
     succeeds: (func, msg) => {
         try{
             func();
@@ -49,7 +104,7 @@ let assert = {
     }
 }
 
-let Suite = Function(name){
+let Suite = Function(name) {
     this.name = name;
     this.addTest = (name, test) => {
         if(!test)test = name;
